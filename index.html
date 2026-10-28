@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>出行导航 - 机票、火车、住宿与签证网址分类</title>
+<meta name="description" content="按分类整理的出行网址：机票航班、火车长途、酒店民宿、攻略点评、地图路线、签证出入境、换汇时差与租车，支持站内查找和本地收藏。含成人内容分区，仅限 18 周岁及以上访问。">
+
+<!-- ↓ 镜像站取消这一行注释，主力站保持注释。详见 README.md
+     只开 noindex,follow。别再加 canonical：两个信号矛盾，
+     canonical 会把 noindex 一并传过去。 -->
+<!-- <meta name="robots" content="noindex,follow"> -->
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="出行导航 - 机票、火车、住宿与签证网址分类">
+<meta property="og:description" content="机票、火车、住宿、攻略、签证与换汇的分类网址，支持站内查找和本地收藏。">
+<!-- no-referrer 而不是 no-referrer-when-downgrade：
+     后者会把完整的来源网址发给目标站，成人条目那一条尤其不该这样。 -->
+<meta name="referrer" content="no-referrer">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 脚本没起来时的兜底。app.js 一启动就会把它藏掉。
+     noscript 只管「禁用了 JS」，管不了「JS 开着但 app.js 被拦截」。 -->
+<div class="boot">
+  <h2>页面没能加载完整</h2>
+  <p>刷新一下通常就好。如果反复这样，可能是拦截插件挡掉了本页的脚本。</p>
+</div>
+
+<noscript>
+  <!-- 禁用 JS 时 .js-ok 永远不会被加上，上面那块静态兜底会一直显示，
+       和这里叠成两张卡片，而且它那句「可能是拦截插件挡掉了脚本」
+       在这种情况下是错的。用 noscript 里的样式把它压掉。 -->
+  <style>.boot { display: none; }</style>
+  <div class="boot ns">
+    <h2>需要开启 JavaScript</h2>
+    <p>本页的分类与查找功能依赖脚本。</p>
+  </div>
+  <style>.boot.ns { display: block; }</style>
+</noscript>
+
+<div id="shell" class="shell" hidden>
+
+  <!-- 这一套以查找为中心：大搜索框居中当主角，
+       分类在下面折叠排列，而不是铺满一屏。 -->
+  <header class="hero">
+    <h1 class="title" id="brand-name">出行导航</h1>
+    <p class="lede" id="brand-tag"></p>
+
+    <form id="find-form" class="find" role="search">
+      <label class="sr-only" for="engine">查找方式</label>
+      <select id="engine">
+        <option value="local">站内查找</option>
+        <option value="baidu">百度</option>
+        <option value="bing">Bing</option>
+        <option value="google">Google</option>
+      </select>
+      <label class="sr-only" for="find">关键词</label>
+      <input id="find" type="search" placeholder="搜站点名、用途，或按 / 聚焦" autocomplete="off" spellcheck="false">
+      <button type="submit">查找</button>
+    </form>
+
+    <!-- aria-label 必须包含可见文字「切换主题」，
+         否则语音控制念可见文字匹配不上（WCAG 2.5.3）。 -->
+    <button type="button" id="theme" class="theme" aria-label="切换主题">切换主题</button>
+  </header>
+
+  <main class="main">
+    <div id="groups"></div>
+    <!-- role=status：筛到零结果时读屏器要能播报出来，
+         否则分区悄悄消失、这句话从没被读过。 -->
+    <p id="empty" class="empty" role="status" hidden></p>
+  </main>
+
+  <footer class="foot">
+    <p class="foot-age"><span class="mark">18+</span> 成人内容分区仅限年满 18 周岁者访问</p>
+    <p class="foot-note" id="foot-note"></p>
+  </footer>
+</div>
+
+<!-- 成人条目的点击确认。只拦那一条，其余链接照常直达。 -->
+<div id="ask" class="ask" role="dialog" aria-modal="true" aria-labelledby="ask-title" hidden>
+  <div class="ask-panel">
+    <p class="mark-row"><span class="mark">18+</span></p>
+    <h2 id="ask-title">这是成人内容</h2>
+    <p class="ask-body">你正要打开 <span id="ask-name"></span>，内容面向成年人。请确认你已满 18 周岁。</p>
+    <div class="ask-actions">
+      <button type="button" id="ask-ok" class="btn">我已满 18 周岁，继续</button>
+      <button type="button" id="ask-no" class="btn btn-quiet">取消</button>
+    </div>
+    <p class="ask-fine">确认结果只存在这台设备的浏览器里，下次不再询问。</p>
+  </div>
+</div>
+
+<script src="sites.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
